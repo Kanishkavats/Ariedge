@@ -14,10 +14,14 @@ const app = express();
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow: no origin (curl/Postman), or any localhost port in dev
-    if (!origin || origin.startsWith('http://localhost:')) return callback(null, true);
+    // Allow: no origin (curl/Postman), any localhost port in dev, or specific production client URL
+    if (!origin || origin.startsWith('http://localhost:') || origin === process.env.CLIENT_URL) {
+      return callback(null, true);
+    }
     callback(null, false);
   },
+  credentials: true,
+}));
   credentials: true,
 }));
 app.use(express.json());
