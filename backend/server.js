@@ -22,8 +22,7 @@ app.use(cors({
   },
   credentials: true,
 }));
-  credentials: true,
-}));
+
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
