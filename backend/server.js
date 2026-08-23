@@ -14,8 +14,13 @@ const app = express();
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow: no origin (curl/Postman), any localhost port in dev, or specific production client URL
-    if (!origin || origin.startsWith('http://localhost:') || origin === process.env.CLIENT_URL) {
+    // Allow: no origin (curl/Postman), any localhost, any vercel.app, or CLIENT_URL env var
+    if (
+      !origin ||
+      origin.startsWith('http://localhost:') ||
+      origin.endsWith('.vercel.app') ||
+      origin === process.env.CLIENT_URL
+    ) {
       return callback(null, true);
     }
     callback(null, false);
